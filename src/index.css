@@ -1,0 +1,178 @@
+/* Page */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  background: #0f172a; /* Slightly darker background to make the calculator pop */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Calculator Wrapper */
+.calculator {
+  width: 380px;
+  background: #1e293b;
+  padding: 24px;
+  border-radius: 35px;
+  
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.4),
+    inset 0 1px 1px rgba(255,255,255,0.05);
+}
+
+/* Display */
+#display {
+  width: 100%;
+  height: 130px;
+
+  background: #020617;
+  border-radius: 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: flex-end;
+  align-items: flex-end;
+
+  padding: 20px;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+
+  overflow: hidden;
+
+  box-shadow: inset 0 4px 12px rgba(0,0,0,0.5);
+}
+
+/* Display Text */
+#display h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 3.5rem;
+  font-weight: 400;
+  word-break: break-all;
+  letter-spacing: 2px;
+}
+
+#display h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 400;
+  word-break: break-all;
+  letter-spacing: 2px;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 80px);
+  gap: 14px; /* Tighter spacing for a cohesive look */
+  justify-content: center;
+}
+
+/* Base Buttons */
+.grid button {
+  width: 80px;
+  height: 80px;
+  border: none;
+  border-radius: 50%;
+  
+  font-size: 1.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* Smoother transition curve */
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  box-shadow:
+    0 4px 10px rgba(0,0,0,0.2),
+    inset 0 1px 1px rgba(255,255,255,0.1);
+}
+
+/* Number Buttons */
+.Numbers {
+  background: #334155; /* Softened dark grey instead of harsh pure black */
+  color: #f8fafc;
+}
+
+/* Operator Buttons (/, x, -, +) */
+.operator {
+  background: #e2e8f0; /* Soft off-white */
+  color: #0f172a;
+  font-size: 2rem; 
+}
+
+/* Top Row Buttons (AC, %, C) */
+.clear {
+  background: #475569; /* Distinct slate grey to separate from numbers */
+  color: #ffffff;
+  font-size: 1.5rem;
+}
+
+/* Specific Hover for Clear/AC */
+.clear:hover {
+  background-color: #ef4444; /* Standard red for destructive actions */
+  color: white;
+}
+
+/* Equals Button */
+.equals {
+  background: #f59e0b; /* Warmer, slightly more vibrant orange */
+  color: #ffffff; /* White text contrasts better on orange */
+  font-size: 2rem;
+}
+
+/* Global Hover Effect */
+.grid button:hover {
+  transform: scale(1.05);
+  filter: brightness(1.15); /* Brightens the button slightly */
+  
+  box-shadow:
+    0 6px 15px rgba(0,0,0,0.3),
+    inset 0 1px 1px rgba(255,255,255,0.2);
+}
+
+/* Global Click Effect */
+.grid button:active {
+  transform: scale(0.95);
+  filter: brightness(0.9);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Mobile Responsive */
+@media (max-width: 500px) {
+  .calculator {
+    width: 320px;
+    padding: 20px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(4, 65px);
+    gap: 12px;
+  }
+
+  .grid button {
+    width: 65px;
+    height: 65px;
+    font-size: 1.4rem;
+  }
+
+  #display {
+    height: 90px;
+    padding: 15px;
+  }
+
+  #display h1 {
+    font-size: 2.8rem;
+  }
+}
