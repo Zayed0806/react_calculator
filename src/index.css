@@ -42,7 +42,7 @@ body {
 
   padding: 20px;
   box-sizing: border-box;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 
   overflow: hidden;
 
@@ -91,7 +91,6 @@ body {
   justify-content: center;
   align-items: center;
   
-  /* Smoother transition curve */
   transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   
   box-shadow:
@@ -149,7 +148,6 @@ body {
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* Mobile Responsive */
 @media (max-width: 500px) {
   .calculator {
     width: 320px;
