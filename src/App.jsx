@@ -8,6 +8,8 @@ const ops = ["+", "-", "x", "/", "%"];
 function App() {
   const [input, setInput] = useState("");
   const [ans, setAns] = useState("");
+  const [history, setHistory] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
 
   const gridnum = (value) => {
     if (input === "") {
@@ -73,9 +75,7 @@ function App() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            expression: input,
-          }),
+          body: JSON.stringify({ expression: input, save: false }),
         });
 
         const data = await response.json();
@@ -94,9 +94,25 @@ function App() {
     fetchResult();
   }, [input]);
 
-  const evaluate = () => {
+  // Change your live-preview fetch (useEffect) to NOT save:
+
+// Change evaluate() to save and refresh history:
+  const evaluate = async () => {
+    if (ans === "") return;
+    try {
+        await fetch("http://localhost:8000/calculate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ expression: input, save: true }),
+        });
+        const res = await fetch("http://localhost:8000/history");
+        const data = await res.json();
+        setHistory(data);
+    } catch (err) {
+        console.log(err);
+    }
     setInput(ans);
-  };
+};
 
   const del = () => {
     if (input === "") return;
@@ -108,19 +124,64 @@ function App() {
     setAns("");
   };
 
-  return (
-    <>
-      <div className="Calculator">
-        <Display input={input} ans={ans} />
+  useEffect(() => {
+  const fetchHistory = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8000/history"
+      );
 
-        <Grid
-          onButtonClick={gridnum}
-          del={del}
-          all_del={all_del}
-          evaluate={evaluate}
-        />
+      const data = await response.json();
+
+      setHistory(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  fetchHistory();
+}, []);
+
+  return (
+  <div className="app-container">
+    <div className="Calculator">
+      <button
+        className="history-btn"
+        onClick={() => setShowHistory(!showHistory)}
+      >
+        {showHistory ? "Hide History" : "Show History"}
+      </button>
+
+      <Display input={input} ans={ans} />
+
+      <Grid
+        onButtonClick={gridnum}
+        del={del}
+        all_del={all_del}
+        evaluate={evaluate}
+      />
+    </div>
+
+    {showHistory && (
+      <div className="history">
+        <h3>History</h3>
+
+        {history.length === 0 ? (
+          <p>No calculations yet</p>
+        ) : (
+          history.map((item) => (
+            <div
+              key={item._id}
+              className="history-item"
+              onClick={() => setInput(item.expression)}
+            >
+              {item.expression} = {item.result}
+            </div>
+          ))
+        )}
       </div>
-    </>
+    )}
+   </div>
   );
 }
 
